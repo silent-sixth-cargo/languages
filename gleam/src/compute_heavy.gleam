@@ -6,9 +6,8 @@ import gleam/list
 @external(javascript, "./ffi.mjs", "monotonic_time")
 pub fn get_monotonic_time() -> Int
 
-// Simulate unsigned 64-bit arithmetic by masking overflow
 fn uint64_mask(n: Int) -> Int {
-  let mask = 18446744073709551615  // 0xFFFFFFFFFFFFFFFF
+  let mask = 18446744073709551615
   int.bitwise_and(n, mask)
 }
 
