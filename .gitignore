@@ -1,0 +1,205 @@
+# Compiled binaries and executables
+**/compute_heavy
+**/compute_heavy.exe
+**/a.out
+**/test
+**/test.exe
+
+# Build directories and artifacts
+**/build/
+**/target/
+**/bin/
+**/obj/
+**/dist/
+**/out/
+**/.build/
+
+# Language-specific build artifacts
+## Rust
+**/Cargo.lock
+**/target/
+
+## Go
+**/go.mod
+**/go.sum
+
+## Java
+**/*.class
+**/*.jar
+**/*.war
+
+## C/C++
+**/*.o
+**/*.obj
+**/*.so
+**/*.dll
+**/*.dylib
+**/*.a
+**/*.lib
+
+## OCaml
+**/*.cmi
+**/*.cmo
+**/*.cmx
+**/*.cmxa
+**/*.cma
+**/*.opt
+
+## Nim
+**/nimcache/
+**/*.exe
+
+## Zig
+**/zig-cache/
+**/zig-out/
+
+## V
+**/*.tmp.c
+
+## Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/pip-log.txt
+**/pip-delete-this-directory.txt
+
+## Node.js/JavaScript
+**/node_modules/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/.npm
+**/.yarn/
+
+## Gleam
+**/build/
+**/manifest.toml
+
+## Julia
+**/Manifest.toml
+
+# IDE and editor files
+**/.vscode/
+**/.idea/
+**/.rope*
+**/*.swp
+**/*.swo
+**/*~
+**/.DS_Store
+**/Thumbs.db
+
+# Runtime files
+**/run*.txt
+**/result*.txt
+**/output*.txt
+**/benchmark*.txt
+
+# Temporary test files
+**/test.*
+**/temp.*
+**/tmp.*
+
+# System files
+**/.directory
+**/desktop.ini
+
+# Log files
+**/*.log
+
+# Allow only these file types
+!**/*.rs       # Rust
+!**/*.go       # Go
+!**/*.java     # Java
+!**/*.c        # C
+!**/*.cpp      # C++
+!**/*.cc       # C++
+!**/*.cxx      # C++
+!**/*.h        # Headers
+!**/*.hpp      # C++ Headers
+!**/*.ml       # OCaml
+!**/*.mli      # OCaml Interface
+!**/*.nim      # Nim
+!**/*.zig      # Zig
+!**/*.v        # V
+!**/*.js       # JavaScript
+!**/*.mjs      # ES Modules
+!**/*.ts       # TypeScript
+!**/*.py       # Python
+!**/*.jl       # Julia
+!**/*.gleam    # Gleam
+!**/*.hs       # Haskell
+!**/*.lhs      # Literate Haskell
+!**/*.erl      # Erlang
+!**/*.hrl      # Erlang headers
+!**/*.ex       # Elixir
+!**/*.exs      # Elixir scripts
+!**/*.scala    # Scala
+!**/*.sc       # Scala scripts
+!**/*.kt       # Kotlin
+!**/*.kts      # Kotlin scripts
+!**/*.clj      # Clojure
+!**/*.cljs     # ClojureScript
+!**/*.cljc     # Clojure common
+!**/*.fs       # F#
+!**/*.fsx      # F# scripts
+!**/*.fsi      # F# signatures
+!**/*.swift    # Swift
+!**/*.dart     # Dart
+!**/*.d        # D language
+!**/*.cr       # Crystal
+!**/*.lua      # Lua
+!**/*.wasm     # WebAssembly
+!**/*.wat      # WebAssembly text
+!**/*.md       # Markdown
+!**/*.toml     # TOML config files
+!**/*.yaml     # YAML config files
+!**/*.yml      # YAML config files
+!**/*.json     # JSON config files
+!**/Cargo.toml # Rust manifest
+!**/gleam.toml # Gleam manifest
+!**/nimble     # Nimble files
+!**/Project.toml # Julia project files
+!**/package.json # Node.js/Bun package files
+!**/dub.json   # D package files
+!**/shard.yml  # Crystal shard files
+!**/mix.exs    # Elixir mix files
+!**/build.sbt  # Scala build files
+!**/cabal      # Haskell cabal files
+!**/stack.yaml # Haskell stack files
+!**/pubspec.yaml # Dart package files
+!**/Makefile   # Makefiles
+!**/CMakeLists.txt # CMake files
+!**/.gitignore # This file itself
+```
+
+Now, here are some additional languages that would be interesting to add to the benchmark:
+
+## Suggested Additional Languages
+
+### **Systems Programming Languages**
+- **Haskell** - Pure functional language with GHC compiler optimizations
+- **Erlang** - Actor model concurrency, compare with Gleam
+- **Crystal** - Ruby-like syntax with compiled performance
+- **D** - Systems language with modern features
+
+### **JVM Languages**
+- **Scala** - Functional/OOP hybrid on JVM
+- **Kotlin/Native** - Kotlin compiled to native binary
+- **Clojure** - Lisp dialect on JVM
+
+### **Functional Languages**
+- **F#** - .NET functional language
+- **Elixir** - Dynamic functional language on Erlang VM
+
+### **Modern Languages**
+- **Swift** - Apple's systems language
+- **Dart** - Google's language (compiled to native)
+- **Lua/LuaJIT** - Lightweight scripting with JIT
+
+### **Alternative Runtimes**
+- **GraalVM Native Image** - AOT compiled Java
+- **WebAssembly (WASM)** - Via Rust/C++ compilation target
+
+Would you like me to implement any of these languages for the benchmark?
