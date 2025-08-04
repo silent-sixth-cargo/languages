@@ -5,18 +5,36 @@ This document contains performance benchmarks for a compute-heavy task across mu
 ## Test Environment
 - **OS**: Linux
 - **Shell**: /bin/zsh
+- **Compiler Versions**:
+  - **GCC**: 15.1.1
+  - **Rust**: 1.82.0
+  - **Go**: 1.24.5
+  - **Java**: OpenJDK 17.0.16
+  - **Crystal**: 1.16.3 (LLVM 20.1.8)
+  - **D**: DMD 2.111.0
+  - **Julia**: 1.11.6
+  - **Nim**: (with ORC memory management)
+  - **OCaml**: 5.3.0
+  - **Gleam**: 1.11.1
+  - **V**: (production build)
+  - **Zig**: (ReleaseFast optimization)
+  - **Node.js**: Latest LTS
+  - **Bun**: 1.2.19
+  - **Python**: 3.x
+  - **Lua**: 5.4.8
+
 - **Optimization Flags Used**:
   - Rust: `cargo build --release` (with opt-level = 3, lto = true, codegen-units = 1)
-  - V: `v -prod -autofree`
+  - V: `v run` (production flags not available in this version)
   - C: `gcc -O3 -march=native -flto compute_heavy.c -o compute_heavy`
   - C++: `g++ -O3 -march=native -flto -std=c++17 compute_heavy.cpp -o compute_heavy`
   - Go: `go build -ldflags="-s -w" -gcflags="-m=0" compute_heavy.go`
   - Zig: `zig build-exe -O ReleaseFast compute_heavy.zig`
   - Java: `javac ComputeHeavy.java` then `java -server ComputeHeavy`
+  - Crystal: `crystal build --release compute_heavy.cr`
+  - D: `dmd -O -release -inline compute_heavy.d`
   - Nim: `nim c -d:release -d:danger --opt:speed compute_heavy.nim`
   - OCaml: `ocamlopt -I +unix unix.cmxa compute_heavy.ml -o compute_heavy`
-  - D: `dmd -O -release -inline`
-  - Crystal: `crystal build --release`
   - Gleam: `gleam run` (compiles to optimized Erlang bytecode)
   - Python: n/a (interpreted)
   - Node.js: n/a (JIT compiled)
@@ -29,8 +47,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | Language | Time (nanoseconds) | Time (seconds) | Result Hash | Command Used |
 |----------|-------------------|----------------|-------------|--------------|
 | Julia    | 630150515         | 0.630          | 3053422219705032040 | julia compute_heavy.jl |
-| Rust     | 661568716         | 0.662          | 3053422219705032040 | cargo run --release |
-| C        | 671187717         | 0.671          | 3053422219705032040 | gcc -O3 -march=native -flto && ./compute_heavy |
+| C        | 689625489         | 0.690          | 3053422219705032040 | gcc -O3 -march=native -flto && ./compute_heavy |
+| Rust     | 727689556         | 0.728          | 3053422219705032040 | cargo run --release |
 | C++      | 768818563         | 0.769          | 3053422219705032040 | g++ -O3 -march=native -flto && ./compute_heavy |
 | Nim      | 832013222         | 0.832          | 3053422219705032040 | nim c -d:release -d:danger --opt:speed && ./compute_heavy |
 | Go       | 1042926248        | 1.043          | 3053422219705032040 | go run compute_heavy.go |
@@ -49,9 +67,9 @@ This document contains performance benchmarks for a compute-heavy task across mu
 ### Run 2 (Direct Binary Execution)
 | Language | Time (nanoseconds) | Time (seconds) | Result Hash | Command Used |
 |----------|-------------------|----------------|-------------|--------------|
-| Rust     | 648879790         | 0.649          | 3053422219705032040 | ./target/release/compute_heavy |
 | Julia    | 650164745         | 0.650          | 3053422219705032040 | julia compute_heavy.jl |
-| C        | 681702637         | 0.682          | 3053422219705032040 | ./compute_heavy |
+| C        | 718944939         | 0.719          | 3053422219705032040 | ./compute_heavy |
+| Rust     | 731390818         | 0.731          | 3053422219705032040 | ./target/release/compute_heavy |
 | C++      | 764223101         | 0.764          | 3053422219705032040 | ./compute_heavy |
 | Nim      | 839007379         | 0.839          | 3053422219705032040 | ./compute_heavy |
 | Java     | 999388287         | 0.999          | 3053422219705032040 | java -server ComputeHeavy |
@@ -71,8 +89,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | Language | Time (nanoseconds) | Time (seconds) | Result Hash | Command Used |
 |----------|-------------------|----------------|-------------|--------------|
 | Julia    | 619624049         | 0.620          | 3053422219705032040 | julia compute_heavy.jl |
-| C        | 659179125         | 0.659          | 3053422219705032040 | ./compute_heavy |
-| Rust     | 675275850         | 0.675          | 3053422219705032040 | ./target/release/compute_heavy |
+| C        | 701568972         | 0.702          | 3053422219705032040 | ./compute_heavy |
+| Rust     | 718929861         | 0.719          | 3053422219705032040 | ./target/release/compute_heavy |
 | C++      | 784598432         | 0.785          | 3053422219705032040 | ./compute_heavy |
 | Nim      | 820062893         | 0.820          | 3053422219705032040 | ./compute_heavy |
 | Java     | 977338518         | 0.977          | 3053422219705032040 | java -server ComputeHeavy |
@@ -92,8 +110,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | Rank | Language | Avg Time (ns) | Avg Time (s) | Relative Speed |
 |------|----------|---------------|--------------|----------------|
 | 1    | Julia    | 633313103     | 0.633        | 1.00x         |
-| 3    | Rust     | 661908119     | 0.662        | 1.05x         |
-| 2    | C        | 670689826     | 0.671        | 1.06x         |
+| 2    | C        | 703379800     | 0.703        | 1.11x         |
+| 3    | Rust     | 726003412     | 0.726        | 1.15x         |
 | 4    | C++      | 772546699     | 0.773        | 1.22x         |
 | 5    | Nim      | 830361165     | 0.830        | 1.31x         |
 | 6    | Java     | 1002091244    | 1.002        | 1.58x         |
@@ -120,7 +138,9 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | **Nim**     | ✅ LIKED     | 0.830        | 1.31x          | Binary compilation, no VM/GC overhead, Python-like syntax with C performance                                          |
 | **Java**    | ❌ DISLIKED  | 1.002        | 1.58x          | JVM requirement, garbage collector, enterprise bloat                                                                  |
 | **Go**      | ❌ DISLIKED  | 1.054        | 1.66x          | Garbage collector, runtime overhead, Google corporate control                                                         |
+| **Crystal** | ✅ LIKED     | 1.251        | 1.97x          | Ruby-like syntax with compiled performance, memory safety, no GC overhead, modern language design                    |
 | **OCaml**   | ❌ REJECTED  | 1.404        | 2.22x          | Functional paradigm limitations, niche ecosystem                                                                      |
+| **D**       | ❌ DISLIKED  | 1.598        | 2.52x          | Complex language design, fragmented ecosystem, optional GC creates inconsistency                                     |
 | **V**       | ✅ EXCEPTION | 6.135        | 9.69x          | No GC, compiles to binary, acceptable despite current performance limitations, lacks modern safety features          |
 | **Node.js** | ✅ TOLERATED | 15.967       | 25.22x         | Interpreted flexibility, mid-tier performance acceptable for rapid development                                        |
 | **Lua**     | ✅ TOLERATED | 20.015       | 31.61x         | Lightweight interpreted, good embedding capabilities, acceptable performance                                          |
@@ -135,6 +155,7 @@ This document contains performance benchmarks for a compute-heavy task across mu
 ### ✅ PREFERRED STACK
 - **Rust**: Modern systems language, memory safety without GC
 - **Nim**: Python syntax meets C performance
+- **Crystal**: Ruby-like syntax with compiled performance, memory safety without GC
 
 ### ✅ EXCEPTIONS
 - **Julia**: Scientific computing exception despite JIT
@@ -148,6 +169,7 @@ This document contains performance benchmarks for a compute-heavy task across mu
 ### ❌ REJECTED/DISLIKED (GC/VM/Legacy)
 - **Go, Java**: Garbage collectors, VM overhead
 - **C, C++**: Legacy museum languages
+- **D**: Complex language design, fragmented ecosystem, optional GC inconsistency
 - **Zig**: Poor performance, overhyped
 - **Bun**: Inferior to Node.js
 - **Gleam, OCaml**: VM dependencies, niche use
@@ -212,3 +234,20 @@ This document contains performance benchmarks for a compute-heavy task across mu
 - **OCaml Fix**: Corrected unsigned 64-bit arithmetic simulation to match other languages' overflow behavior.
 - **JavaScript Fixes**: Both Node.js and Bun now use BigInt with proper 64-bit unsigned integer overflow simulation to match the mathematical precision of compiled languages.
 - **Python Fix**: Updated Python implementation to use `int` type with proper 64-bit unsigned integer overflow simulation to match the mathematical precision of compiled languages.
+- **Crystal Implementation**: Successfully implemented with proper unsigned 64-bit arithmetic using `&*` and `&+` operators for overflow wrapping, achieving excellent performance (1.251s avg) with Ruby-like syntax.
+- **D Language Implementation**: Implemented using native `ulong` type with automatic overflow behavior, demonstrating solid performance (1.598s avg) but slower than other systems languages due to less aggressive optimizations.
+
+## Language Design Analysis
+
+### **Crystal** (Rank #8 - 1.251s)
+- **Strengths**: Ruby-like syntax with compiled performance, memory safety without GC, LLVM backend optimization
+- **Performance**: Excellent for a high-level language, competitive with Go and Java
+- **Use Case**: Ideal for developers wanting Ruby ergonomics with native performance
+- **Verdict**: **PREFERRED** - Modern language design with practical performance
+
+### **D** (Rank #10 - 1.598s) 
+- **Strengths**: Systems programming capabilities, optional GC, template metaprogramming
+- **Weaknesses**: Complex language design, fragmented ecosystem, inconsistent memory management paradigms
+- **Performance**: Decent but not exceptional, slower than other systems languages
+- **Use Case**: Limited adoption, overshadowed by Rust and Go
+- **Verdict**: **DISLIKED** - Complexity without proportional benefits
