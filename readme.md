@@ -153,6 +153,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 - **Zig**: Poor performance, overhyped
 - **Bun**: Inferior to Node.js
 - **Gleam, OCaml**: VM dependencies, niche use
+- **Crystal** — Hard GC dependency, limited parallelism, weak ecosystem
+- **D** — Optional GC but poor syntax, fragmented tooling, lacks modern safety features
 
 ## Optimization Flags Summary
 
