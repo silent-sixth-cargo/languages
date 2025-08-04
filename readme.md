@@ -15,6 +15,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
   - Java: `javac ComputeHeavy.java` then `java -server ComputeHeavy`
   - Nim: `nim c -d:release -d:danger --opt:speed compute_heavy.nim`
   - OCaml: `ocamlopt -I +unix unix.cmxa compute_heavy.ml -o compute_heavy`
+  - D: `dmd -O -release -inline`
+  - Crystal: `crystal build --release`
   - Gleam: `gleam run` (compiles to optimized Erlang bytecode)
   - Python: n/a (interpreted)
   - Node.js: n/a (JIT compiled)
@@ -27,8 +29,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | Language | Time (nanoseconds) | Time (seconds) | Result Hash | Command Used |
 |----------|-------------------|----------------|-------------|--------------|
 | Julia    | 630150515         | 0.630          | 3053422219705032040 | julia compute_heavy.jl |
-| C        | 689625489         | 0.690          | 3053422219705032040 | gcc -O3 -march=native -flto && ./compute_heavy |
-| Rust     | 727689556         | 0.728          | 3053422219705032040 | cargo run --release |
+| Rust     | 661568716         | 0.662          | 3053422219705032040 | cargo run --release |
+| C        | 671187717         | 0.671          | 3053422219705032040 | gcc -O3 -march=native -flto && ./compute_heavy |
 | C++      | 768818563         | 0.769          | 3053422219705032040 | g++ -O3 -march=native -flto && ./compute_heavy |
 | Nim      | 832013222         | 0.832          | 3053422219705032040 | nim c -d:release -d:danger --opt:speed && ./compute_heavy |
 | Go       | 1042926248        | 1.043          | 3053422219705032040 | go run compute_heavy.go |
@@ -47,9 +49,9 @@ This document contains performance benchmarks for a compute-heavy task across mu
 ### Run 2 (Direct Binary Execution)
 | Language | Time (nanoseconds) | Time (seconds) | Result Hash | Command Used |
 |----------|-------------------|----------------|-------------|--------------|
+| Rust     | 648879790         | 0.649          | 3053422219705032040 | ./target/release/compute_heavy |
 | Julia    | 650164745         | 0.650          | 3053422219705032040 | julia compute_heavy.jl |
-| C        | 718944939         | 0.719          | 3053422219705032040 | ./compute_heavy |
-| Rust     | 731390818         | 0.731          | 3053422219705032040 | ./target/release/compute_heavy |
+| C        | 681702637         | 0.682          | 3053422219705032040 | ./compute_heavy |
 | C++      | 764223101         | 0.764          | 3053422219705032040 | ./compute_heavy |
 | Nim      | 839007379         | 0.839          | 3053422219705032040 | ./compute_heavy |
 | Java     | 999388287         | 0.999          | 3053422219705032040 | java -server ComputeHeavy |
@@ -69,8 +71,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | Language | Time (nanoseconds) | Time (seconds) | Result Hash | Command Used |
 |----------|-------------------|----------------|-------------|--------------|
 | Julia    | 619624049         | 0.620          | 3053422219705032040 | julia compute_heavy.jl |
-| C        | 701568972         | 0.702          | 3053422219705032040 | ./compute_heavy |
-| Rust     | 718929861         | 0.719          | 3053422219705032040 | ./target/release/compute_heavy |
+| C        | 659179125         | 0.659          | 3053422219705032040 | ./compute_heavy |
+| Rust     | 675275850         | 0.675          | 3053422219705032040 | ./target/release/compute_heavy |
 | C++      | 784598432         | 0.785          | 3053422219705032040 | ./compute_heavy |
 | Nim      | 820062893         | 0.820          | 3053422219705032040 | ./compute_heavy |
 | Java     | 977338518         | 0.977          | 3053422219705032040 | java -server ComputeHeavy |
@@ -90,8 +92,8 @@ This document contains performance benchmarks for a compute-heavy task across mu
 | Rank | Language | Avg Time (ns) | Avg Time (s) | Relative Speed |
 |------|----------|---------------|--------------|----------------|
 | 1    | Julia    | 633313103     | 0.633        | 1.00x         |
-| 2    | C        | 703379800     | 0.703        | 1.11x         |
-| 3    | Rust     | 726003412     | 0.726        | 1.15x         |
+| 3    | Rust     | 661908119     | 0.662        | 1.05x         |
+| 2    | C        | 670689826     | 0.671        | 1.06x         |
 | 4    | C++      | 772546699     | 0.773        | 1.22x         |
 | 5    | Nim      | 830361165     | 0.830        | 1.31x         |
 | 6    | Java     | 1002091244    | 1.002        | 1.58x         |
