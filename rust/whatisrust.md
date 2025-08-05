@@ -45,13 +45,13 @@ Examples:
 
 ## 📊 **Summary Table**
 
-| Language/System | Low-Level? | Why? |
-|----------------|------------|------|
-| **Assembly** | ✅ Yes | Direct instructions |
-| **C** | ⚪ Partial | Can access system, but relies on toolchain |
-| **Zig (self-hosted)** | ✅ Yes | Emits its own machine code |
-| **Rust** | ❌ No | Delegates to LLVM for machine code |
-| **Python/Java/C#** | ❌ No | Run on virtual machines, no direct system access |
+| Language | Memory Management | Metal Access | Verdict |
+|---|---|---|---|
+| Assembly | Manual | Direct | ✅ Low-level |
+| C | Manual | Via syscalls | 🟡 Systems-level |
+| Rust | Ownership + LLVM | Via abstractions | ❌ High-level + Systems access |
+| V (-autofree) | Compiler-inserted frees | Via C backend | ❌ High-level + Broken |
+| V (default GC) | Garbage collected | Via C backend | ❌ High-level |
 
 ## 🧱 **Rust Is a High-Level Systems Language**
 
